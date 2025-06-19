@@ -2,7 +2,6 @@ import logging
 from typing import Optional
 
 import numpy as np
-from django.template.context_processors import media
 
 from src.equity_utils.joint_equity_probabilities import load_conditional_joint_probabilities, \
     compute_weighted_equity_vector
