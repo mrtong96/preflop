@@ -1,0 +1,10 @@
+For each of the ~2k preflop suit rotations:
+* Have IP/OOP ranges of ncr(52, 2) cards,
+* Have a graph of possible betting results
+
+For each equilibrium step:
+* Need to figure out the EV of including/excluding a step
+
+For cleaning up the equilibrium step:
+* Need to figure out the derivative of adding new hands to range by 169-combinations
+* Instead
