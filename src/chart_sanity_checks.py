@@ -10,7 +10,7 @@ np.set_printoptions(linewidth=180)
 NUM_PLAYERS = 6
 
 def count_children(chart):
-    print(len(chart.children_charts), chart.bet_sequence)
+    # print(len(chart.children_charts), chart.bet_sequence)
     return 1 + sum([count_children(child) for child in chart.children_charts])
 
 def run_equilibrium_step(chart, step_size=0.01):
@@ -35,7 +35,7 @@ def main():
         stack_size=100,
         rake=0.00,
     )
-    # count_children(root_chart)
+    print(count_children(root_chart))
 
     t0 = time.time()
     step_size = 0.1
