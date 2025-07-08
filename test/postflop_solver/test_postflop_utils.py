@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.post_flop_solver.post_flop_utils import get_vector_index, VECTOR_SIZE, get_cards_from_vector_index
+from src.post_flop_solver_old.post_flop_utils import get_vector_index, VECTOR_SIZE, get_cards_from_vector_index
 
 
 class TestPostflopUtils(unittest.TestCase):

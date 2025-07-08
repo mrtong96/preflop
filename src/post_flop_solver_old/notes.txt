@@ -16,8 +16,8 @@ For cleaning up the equilibrium step:
     * We compute the tree of how many possible paths we could go down.
     * In general there are 4 possible decisions
     * About 500k tree nodes per rotation
-    * Vector size is about 3 x ncr(52, 2) ~ 3k
-    * 3k * 2k * 500k ~ 3000B ~ 3T params... way too many
+    * Vector size is about 3 x ncr(52, 2) ~ 4k
+    * 4k * 2k * 500k ~ 4000B ~ 4T params... way too many
 
 * V2
     * ~225k possible 5-card suit rotations, about 10x less than ncr(52, 5)
@@ -29,3 +29,16 @@ For cleaning up the equilibrium step:
 
 * V3
     * Flush suit rotations, we only care about potential flush suit/everything else
+    * For flop/turn/river community cards we only need to store suits if there's 1/2/3 of a single suit otherwise use default
+        * Makes no difference for flop/turn but does for river.
+        * suit distributions like 2/2/1 and 2/1/1/1 become the same thing (don't care)
+    * With hole cards, the flop/turn/river means we only care if there's 3/4/5 of a single suit
+        * In other words, do you have a flush draw in this suit or not
+    * Compared to v2
+        * For 5-card combos go from 204087 -> 58513 5-card combinations (3-4x)
+        * For (5-card x hole card) go from 200780658 -> 10074142 combos (almost 20x)
+    * Size est
+        * ~0.6M/4.5M/10M (3/4/5-card x hole card) -> ~ 15M hole card positions
+        * For each hole card position, can have 3 decisions in 4^3 positions
+        * ~ 3B params ish?
+        * With overhead... probably ~16GB mem in RAM? barely possible

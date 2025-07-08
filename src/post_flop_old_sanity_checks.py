@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.post_flop_solver.postflop_chart import PostflopChart
+from src.post_flop_solver_old.postflop_chart import PostflopChart
 
 if __name__ == '__main__':
     def count_children(node: PostflopChart):

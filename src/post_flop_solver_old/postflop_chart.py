@@ -3,8 +3,8 @@ from typing import Optional
 import numpy as np
 
 from src.card_utils.hole_cards import get_index, get_2d_index
-from src.post_flop_solver.post_flop_utils import VECTOR_SIZE, get_cards_from_vector_index
-from src.post_flop_solver.postflop_bet import PostFlopBet, PostFlopAction
+from src.post_flop_solver_old.post_flop_utils import VECTOR_SIZE, get_cards_from_vector_index
+from src.post_flop_solver_old.postflop_bet import PostFlopBet, PostFlopAction
 from src.preflop_solver.bet import BetType
 
 
