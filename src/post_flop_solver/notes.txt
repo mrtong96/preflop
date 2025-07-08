@@ -8,3 +8,24 @@ For each equilibrium step:
 For cleaning up the equilibrium step:
 * Need to figure out the derivative of adding new hands to range by 169-combinations
 * Instead
+
+### How params do we need
+
+* V1
+    * Start out for each ~2k 3-card suit rotation
+    * We compute the tree of how many possible paths we could go down.
+    * In general there are 4 possible decisions
+    * About 500k tree nodes per rotation
+    * Vector size is about 3 x ncr(52, 2) ~ 3k
+    * 3k * 2k * 500k ~ 3000B ~ 3T params... way too many
+
+* V2
+    * ~225k possible 5-card suit rotations, about 10x less than ncr(52, 5)
+    * If we do ncr(52, 2) size vector for hands, then it's ~1.3k
+    * If we assume 4 possible steps per hand (oop raise, ip raise, oop all in, ip call/fold)
+    * There's probably about ~4^3 = 64 possible tree paths to go down...
+    * ~20B params for the post flop solving.
+    * That's kind of a lot but less than the 3T version...
+
+* V3
+    * Flush suit rotations, we only care about potential flush suit/everything else

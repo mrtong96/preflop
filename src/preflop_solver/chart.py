@@ -280,20 +280,12 @@ class Chart:
         return equity_amount
 
     def _update_decision_chart(self, equity_matrix, step_size):
-        optimal_decisions = np.argmax(equity_matrix, axis=0).ravel()
-
-        optimal_decision_matrix = np.zeros((len(BetType), 169), dtype=np.float64)
-        optimal_decision_matrix[optimal_decisions, list(range(169))] = 1
-
-        # linearly extrapolate by step_size to make your iteration
-        self.decision_chart = self.decision_chart * (1 - step_size) + optimal_decision_matrix * step_size
-
-    def _update_decision_chart2(self, equity_matrix, step_size):
         valid_bets = sorted([bet.value for bet in self.valid_bets])
-        median_equity = np.median(equity_matrix[valid_bets], axis=0).reshape((1, 169))
-        min_equity = np.min(equity_matrix[valid_bets], axis=0).reshape((1, 169))
+        current_equity = np.sum(equity_matrix[valid_bets] * self.decision_chart[valid_bets], axis=0).reshape((1, -1))
+        gradient = step_size * (equity_matrix[valid_bets] - current_equity)
+
         # adjust probabilities based on equity diffs
-        self.decision_chart[valid_bets] += step_size * (equity_matrix[valid_bets] - median_equity)
+        self.decision_chart[valid_bets] += step_size * gradient
         self.decision_chart[valid_bets] = np.maximum(self.decision_chart[valid_bets], 0)
         self.decision_chart[valid_bets] /= np.sum(self.decision_chart[valid_bets], axis=0).reshape((1, 169))
 
@@ -338,5 +330,4 @@ class Chart:
         equity_matrix[invalid_bets] = -np.inf
 
         # make your updates
-        # self._update_decision_chart(equity_matrix, step_size)
-        self._update_decision_chart2(equity_matrix, step_size)
+        self._update_decision_chart(equity_matrix, step_size)

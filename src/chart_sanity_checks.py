@@ -1,7 +1,6 @@
 import time
 
 import numpy as np
-from PIL.ImageOps import scale
 
 from src.preflop_solver.chart import Chart
 
@@ -33,7 +32,7 @@ def main():
         max_vpip_players=2,
         players=NUM_PLAYERS,
         stack_size=100,
-        rake=0.00,
+        rake=0.05,
     )
     print(count_children(root_chart))
 
